@@ -1,79 +1,84 @@
+/* General */
 body {
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ecf0f1;
-  color: #2c3e50;
+  color: #2C3E50;
 }
 
 header {
-  background-color: #2c3e50;
-  color: white;
-  padding: 1.5rem;
+  background-color: #2C3E50;
+  color: #fff;
   text-align: center;
+  padding: 1rem 0;
 }
 
 #creditos-info {
-  margin-top: 0.5rem;
-  font-size: 1rem;
+  background: #34495e;
+  padding: 0.5rem;
+  font-size: 0.9rem;
 }
 
+/* Contenido principal */
 main {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 2rem;
   padding: 2rem;
 }
 
+/* Contenedor por semestre */
 .semestre {
-  margin-bottom: 2rem;
-  width: 100%;
-  max-width: 900px;
+  border-left: 6px solid #2980b9;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 .semestre h2 {
-  color: #34495e;
-  border-bottom: 2px solid #bdc3c7;
-  padding-bottom: 0.5rem;
+  color: #2980b9;
 }
 
+/* Tarjetas de ramos */
 .ramo {
-  background-color: #3b4c68; /* azul marino claro */
-  color: white;
+  background-color: #bdc3c7;
+  color: #2C3E50;
   padding: 1rem;
   margin: 0.5rem 0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.ramo:hover {
-  background-color: #2e3d55;
-}
-
-.ramo.bloqueado {
-  background-color: #95a5a6;
+  border-radius: 6px;
   cursor: not-allowed;
   opacity: 0.6;
+  transition: all 0.3s;
 }
 
+/* Ramos desbloqueados */
+.ramo.activo {
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* Ramos aprobados */
 .ramo.aprobado {
-  background-color: #2ecc71;
+  background-color: #27ae60;
+  color: #fff;
 }
 
+/* Hover */
+.ramo:hover {
+  transform: scale(1.02);
+}
+
+/* Detalle de ramo */
 #detalles {
-  padding: 1.5rem 2rem;
-  background-color: #ffffff;
-  border-top: 2px solid #bdc3c7;
-  max-width: 900px;
-  margin: auto;
+  background-color: #fff;
+  border-top: 2px solid #2980b9;
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
 }
 
 #detalles h2 {
-  color: #2c3e50;
-}
-
-#detalles p {
-  margin: 0.5rem 0;
-  line-height: 1.5;
+  margin-top: 0;
+  color: #2C3E50;
 }
