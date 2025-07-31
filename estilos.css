@@ -37,7 +37,7 @@ main {
 }
 
 .ramo {
-  background-color: #3498db;
+  background-color: #3b4c68; /* azul marino claro */
   color: white;
   padding: 1rem;
   margin: 0.5rem 0;
@@ -48,7 +48,7 @@ main {
 }
 
 .ramo:hover {
-  background-color: #2980b9;
+  background-color: #2e3d55;
 }
 
 .ramo.bloqueado {
