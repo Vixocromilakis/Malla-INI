@@ -154,61 +154,6 @@ const malla = [
   },
 
 };
-
-// SEMESTRE 8
-  'integracion': {
-    nombre: 'Integración Comercial Internacional', creditos: 4, prerequisitos: ['derecho_comercial'], abre: ['direccion','coyuntura'], semestre: 8
-  },
-  'marketing_global': {
-    nombre: 'Marketing Internacional y Global', creditos: 4, prerequisitos: ['metodologia'], abre: ['direccion'], semestre: 8
-  },
-  'proyectos': {
-    nombre: 'Formulación y Evaluación de Proyectos', creditos: 4, prerequisitos: ['finanzas_corporativas'], abre: ['direccion'], semestre: 8
-  },
-  'transporte': {
-    nombre: 'Transporte y Distribución Internacional', creditos: 5, prerequisitos: ['logistica','operaciones'], abre: [], semestre: 8
-  },
-  'bancaria': {
-    nombre: 'Gestión Bancaria Internacional', creditos: 5, prerequisitos: ['gestion_aduanera'], abre: [], semestre: 8
-  },
-  'english_trade': {
-    nombre: 'English for Foreign Trade', creditos: 4, prerequisitos: ['ingles4'], abre: [], semestre: 8
-  },
-  'simulacion2': {
-    nombre: 'Simulación de Negocios II', creditos: 5, prerequisitos: ['sistemas2','english_trade','macroeconomia','metodologia'], abre: ['seminario'], semestre: 8
-  },
-
-  // SEMESTRE 9
-  'direccion': {
-    nombre: 'Dirección y Gestión Internacional', creditos: 5, prerequisitos: ['integracion','marketing_global','proyectos'], abre: [], semestre: 9
-  },
-  'electivo': {
-    nombre: 'Electivo de Actualización', creditos: 4, prerequisitos: ['negociaciones','finanzas_corporativas','economia_internacional','logistica','metodologia','perfil3','english_management'], abre: [], semestre: 9
-  },
-  'finanzas_internacionales': {
-    nombre: 'Finanzas Internacionales', creditos: 5, prerequisitos: ['finanzas_corporativas'], abre: [], semestre: 9
-  },
-  'coyuntura': {
-    nombre: 'Análisis de Entorno y Coyuntura', creditos: 5, prerequisitos: ['economia_internacional','integracion'], abre: [], semestre: 9
-  },
-  'ciudadana_global': {
-    nombre: 'Formación Ciudadana Global', creditos: 3, prerequisitos: ['negociaciones'], abre: [], semestre: 9
-  },
-  'especializacion1': {
-    nombre: 'Curso I de Especialización', creditos: 0, prerequisitos: [], abre: [], semestre: 9
-  },
-
-  // SEMESTRE 10
-  'practica': {
-    nombre: 'Práctica Profesional', creditos: 16, prerequisitos: ['perfil2','english_academic','gestion_aduanera','derecho_comercial','macroeconomia','negociacion','operaciones'], abre: [], semestre: 10
-  },
-  'seminario': {
-    nombre: 'Seminario de Título', creditos: 12, prerequisitos: ['simulacion2'], abre: [], semestre: 10
-  },
-  'especializacion2': {
-    nombre: 'Curso II de Especialización', creditos: 0, prerequisitos: [], abre: [], semestre: 10
-  },
-  }
 ];
 
 // Estado de los ramos
