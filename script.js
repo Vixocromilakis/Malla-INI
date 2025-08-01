@@ -244,6 +244,19 @@ function construirMapaDependenciasInversas(malla) {
 }
 
 function desmarcarRamoYDependientes(nombreRamo) {
+  const clave = normalizar(nombreRamo);
+  if (!aprobados.has(clave)) return;
+
+  aprobados.delete(clave);
+  const ramo = malla.flatMap(s => s.ramos).find(r => normalizar(r.nombre) === clave);
+  if (ramo) creditosTotales -= ramo.creditos;
+
+  if (dependenciasInversas[clave]) {
+    dependenciasInversas[clave].forEach(dep => {
+      desmarcarRamoYDependientes(dep);
+    });
+  }
+}
   if (!aprobados.has(nombreRamo)) return;
 
   aprobados.delete(nombreRamo);
