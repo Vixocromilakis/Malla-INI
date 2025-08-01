@@ -210,3 +210,237 @@ const ramos = {
 
 // (Las funciones de lógica permanecen igual)
 // crearMalla(), actualizarEstado(), seleccionarRamo(), mostrarDetalles(), window.onload = crearMalla;
+
+  }
+
+];
+
+// Búsqueda por nombre
+function buscarRamo(nombreBuscado) {
+  const resultados = document.querySelectorAll(".ramo");
+  resultados.forEach(div => {
+    if (div.dataset.nombre.toLowerCase().includes(nombreBuscado.toLowerCase())) {
+      div.style.border = "3px solid orange";
+    } else {
+      div.style.border = "1px solid transparent";
+    }
+  });
+}
+
+// Mostrar créditos por semestre
+function calcularCreditosPorSemestre() {
+  const resumen = {};
+  malla.forEach(sem => {
+    resumen[sem.semestre] = sem.ramos
+      .filter(r => aprobados.has(r.nombre))
+      .reduce((acc, r) => acc + r.creditos, 0);
+  });
+  const salida = Object.entries(resumen)
+    .map(([sem, creditos]) => `Semestre ${sem}: ${creditos} créditos`)
+    .join("
+");
+
+  alert("Créditos aprobados por semestre:
+" + salida);
+}
+}
+
+// Mostrar solo ramos desbloqueados
+function ocultarBloqueados() {
+  document.querySelectorAll(".ramo").forEach(div => {
+    if (!div.classList.contains("activo") && !div.classList.contains("aprobado")) {
+      div.style.display = "none";
+    } else {
+      div.style.display = "block";
+    }
+  });
+}
+
+function renderMalla() {
+  const contenedor = document.getElementById("malla");
+  contenedor.innerHTML = "";
+
+  malla.forEach((sem) => {
+    const bloque = document.createElement("section");
+    bloque.classList.add("semestre");
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = `Semestre ${sem.semestre}`;
+    bloque.appendChild(titulo);
+
+    sem.ramos.forEach((ramo) => {
+      const div = document.createElement("div");
+      div.classList.add("ramo");
+      div.textContent = `${ramo.nombre}
+Créditos: ${ramo.creditos}`;
+      div.dataset.nombre = ramo.nombre;
+
+      if (ramo.prereq.length === 0) {
+        div.classList.add("activo");
+      }
+
+      div.addEventListener("click", () => {
+        if (!div.classList.contains("activo") || div.classList.contains("aprobado")) return;
+        div.classList.add("aprobado");
+        aprobados.add(ramo.nombre);
+        creditosTotales += ramo.creditos;
+        document.getElementById("creditos-total").textContent = creditosTotales;
+        mostrarDetalles(ramo);
+        desbloquearRamos();
+      });
+
+      bloque.appendChild(div);
+    });
+
+    contenedor.appendChild(bloque);
+  });
+}
+
+function mostrarDetalles(ramo) {
+  document.getElementById("detalle-nombre").textContent = ramo.nombre;
+  document.getElementById("detalle-creditos").textContent = ramo.creditos;
+  document.getElementById("detalle-prereq").textContent = ramo.prereq.length > 0 ? ramo.prereq.join(", ") : "Ninguno";
+  document.getElementById("detalle-requisitos").textContent = ramo.abre.length > 0 ? ramo.abre.join(", ") : "Ninguno";
+}
+
+function desbloquearRamos() {
+  malla.forEach((sem) => {
+    sem.ramos.forEach((ramo) => {
+      const div = document.querySelector(`.ramo[data-nombre='${ramo.nombre}']`);
+      if (aprobados.has(ramo.nombre)) return;
+      if (ramo.prereq.every((req) => aprobados.has(req))) {
+        div.classList.add("activo");
+        div.style.cursor = "pointer";
+        div.style.opacity = "1";
+      }
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const panel = document.createElement("div");
+  panel.style.position = "fixed";
+  panel.style.top = "1rem";
+  panel.style.right = "1rem";
+  panel.style.background = "#fff";
+  panel.style.padding = "1rem";
+  panel.style.border = "1px solid #ccc";
+  panel.style.borderRadius = "8px";
+  panel.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+  panel.style.zIndex = 1000;
+
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Buscar ramo";
+  searchInput.style.marginBottom = "0.5rem";
+  searchInput.style.width = "100%";
+  searchInput.addEventListener("input", () => buscarRamo(searchInput.value));
+
+  const btnCreditos = document.createElement("button");
+  btnCreditos.textContent = "Ver créditos por semestre";
+  btnCreditos.style.display = "block";
+  btnCreditos.style.margin = "0.3rem 0";
+  btnCreditos.onclick = calcularCreditosPorSemestre;
+
+  const btnFiltrar = document.createElement("button");
+  btnFiltrar.textContent = "Mostrar solo desbloqueados";
+  btnFiltrar.style.display = "block";
+  btnFiltrar.style.margin = "0.3rem 0";
+  btnFiltrar.onclick = ocultarBloqueados;
+
+  panel.appendChild(searchInput);
+  panel.appendChild(btnCreditos);
+  panel.appendChild(btnFiltrar);
+  document.body.appendChild(panel);
+
+  renderMalla();
+});
+});
+
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.semestre {
+  min-width: 220px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  flex-shrink: 0;
+}
+
+.semestre h2 {
+  color: #2980b9;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #2980b9;
+  padding-bottom: 0.5rem;
+}
+
+.ramo {
+  background-color: #bdc3c7;
+  color: #2C3E50;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  text-align: center;
+  transition: all 0.3s;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ramo.activo {
+  background-color: #3498db;
+  color: white;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.ramo.aprobado {
+  background-color: #27ae60;
+  color: white;
+}
+
+.ramo:hover {
+  transform: scale(1.03);
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Interactiva - Ingeniería en Negocios Internacionales</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Malla Interactiva</h1>
+    <p>Ingeniería en Negocios Internacionales - Universidad de Valparaíso</p>
+    <div id="creditos-info">Créditos actuales: <span id="creditos-total">0</span> / 30 <small>(+3 máximo con autorización)</small></div>
+  </header>
+
+  <main id="malla">
+    <!-- Los años y semestres se insertarán dinámicamente desde script.js -->
+  </main>
+
+  <div id="detalles">
+    <h2>Detalles del ramo</h2>
+    <p><strong>Nombre:</strong> <span id="detalle-nombre"></span></p>
+    <p><strong>Créditos:</strong> <span id="detalle-creditos"></span></p>
+    <p><strong>Prerrequisitos:</strong> <span id="detalle-prereq"></span></p>
+    <p><strong>Es prerrequisito de:</strong> <span id="detalle-requisitos"></span></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
