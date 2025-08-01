@@ -1,3 +1,7 @@
+function normalizar(nombre) {
+  return nombre.trim().toLowerCase();
+}
+
 const malla = [
   {
     semestre: 1,
@@ -146,9 +150,9 @@ function renderMalla() {
 }
 
 function actualizarClaseRamo(div, ramo) {
-  const cumplidos = ramo.prereq.every((req) => aprobados.has(req));
+  const cumplidos = ramo.prereq.every((req) => aprobados.has(normalizar(req)));
   div.classList.remove("activo", "aprobado");
-  if (aprobados.has(ramo.nombre)) {
+  if (aprobados.has(normalizar(ramo.nombre))) {
     div.classList.add("aprobado");
     div.style.cursor = "pointer";
     div.style.opacity = "1";
