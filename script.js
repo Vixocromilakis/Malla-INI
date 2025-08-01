@@ -137,15 +137,32 @@ function renderMalla() {
 
       if (ramo.prereq.length === 0) div.classList.add("activo");
 
-      div.addEventListener("click", () => {
-        if (!div.classList.contains("activo") || div.classList.contains("aprobado")) return;
+     function desbloquearRamos() {
+  malla.forEach((sem) => {
+    sem.ramos.forEach((ramo) => {
+      const div = Array.from(document.querySelectorAll(".ramo")).find(d => d.dataset.nombre === ramo.nombre);
+      if (!div) return;
+
+      const cumplidos = ramo.prereq.every((req) => aprobados.has(req));
+
+      if (aprobados.has(ramo.nombre)) {
         div.classList.add("aprobado");
-        aprobados.add(ramo.nombre);
-        creditosTotales += ramo.creditos;
-        document.getElementById("creditos-total").textContent = creditosTotales;
-        mostrarDetalles(ramo);
-        desbloquearRamos();
-      });
+        div.classList.remove("activo");
+        div.style.cursor = "pointer";
+        div.style.opacity = "1";
+      } else if (cumplidos) {
+        div.classList.add("activo");
+        div.classList.remove("aprobado");
+        div.style.cursor = "pointer";
+        div.style.opacity = "1";
+      } else {
+        div.classList.remove("activo", "aprobado");
+        div.style.cursor = "not-allowed";
+        div.style.opacity = "0.6";
+      }
+    });
+  });
+}
 
       bloque.appendChild(div);
     });
