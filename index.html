@@ -14,8 +14,14 @@
   </header>
 
   <div style="padding: 0.5rem; text-align: center; background-color: #dfe6e9;">
-    <label for="colorPicker">Color para ramos:</label>
-    <input type="color" id="colorPicker" value="#bdc3c7">
+    <label for="colorBase">Color base:</label>
+    <input type="color" id="colorBase" value="#bdc3c7">
+    &nbsp;&nbsp;
+    <label for="colorActivo">Color activo:</label>
+    <input type="color" id="colorActivo" value="#3498db">
+    &nbsp;&nbsp;
+    <label for="colorAprobado">Color aprobado:</label>
+    <input type="color" id="colorAprobado" value="#27ae60">
   </div>
 
   <main id="malla">
@@ -32,9 +38,14 @@
 
   <script src="script.js"></script>
   <script>
-    document.getElementById('colorPicker').addEventListener('input', function (e) {
+    document.getElementById('colorBase').addEventListener('input', function (e) {
       document.documentElement.style.setProperty('--ramo-color', e.target.value);
+    });
+    document.getElementById('colorActivo').addEventListener('input', function (e) {
       document.documentElement.style.setProperty('--ramo-color-activo', e.target.value);
+    });
+    document.getElementById('colorAprobado').addEventListener('input', function (e) {
+      document.documentElement.style.setProperty('--ramo-color-aprobado', e.target.value);
     });
   </script>
 </body>
