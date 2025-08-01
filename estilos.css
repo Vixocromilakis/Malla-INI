@@ -1,4 +1,10 @@
 /* General */
+:root {
+  --ramo-color: #bdc3c7;
+  --ramo-color-activo: #3498db;
+  --ramo-color-aprobado: #27ae60;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
@@ -47,7 +53,7 @@ header {
 
 /* Tarjetas de ramos */
 .ramo {
-  background-color: var(--ramo-color, #bdc3c7);
+  background-color: var(--ramo-color);
   color: #2C3E50;
   padding: 0.5rem 0.3rem;
   margin: 0.2rem 0;
@@ -64,7 +70,7 @@ header {
 
 /* Ramos desbloqueados */
 .ramo.activo {
-  background-color: var(--ramo-color-activo, #3498db);
+  background-color: var(--ramo-color-activo);
   color: #fff;
   cursor: pointer;
   opacity: 1;
@@ -72,7 +78,7 @@ header {
 
 /* Ramos aprobados */
 .ramo.aprobado {
-  background-color: var(--ramo-color-aprobado, #27ae60);
+  background-color: var(--ramo-color-aprobado);
   color: #fff;
 }
 
