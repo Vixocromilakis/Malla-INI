@@ -211,7 +211,7 @@ function restaurarSeleccion() {
 
   const seleccionados = JSON.parse(data);
   seleccionados.forEach(nombre => {
-    aprobados.add(nombre);
+    aprobados.add(normalizar(nombre));
   });
 
   creditosTotales = malla
@@ -274,6 +274,7 @@ const dependenciasInversas = construirMapaDependenciasInversas(malla);
 
 document.addEventListener("DOMContentLoaded", () => {
   renderMalla();
+  actualizarTodosLosRamos();
   document.getElementById("creditos-total").textContent = creditosTotales;
   restaurarSeleccion();
 });
