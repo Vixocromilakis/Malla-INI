@@ -1,55 +1,84 @@
-main {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  overflow-x: auto;
-  padding: 1rem;
+/* General */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: #ecf0f1;
+  color: #2C3E50;
 }
 
+header {
+  background-color: #2C3E50;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+#creditos-info {
+  background: #34495e;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Contenido principal */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Contenedor por semestre */
 .semestre {
-  min-width: 220px;
+  border-left: 6px solid #2980b9;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #ccc;
   padding: 1rem;
-  flex-shrink: 0;
+  border-radius: 8px;
 }
 
 .semestre h2 {
   color: #2980b9;
-  font-size: 1.1rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid #2980b9;
-  padding-bottom: 0.5rem;
 }
 
+/* Tarjetas de ramos */
 .ramo {
   background-color: #bdc3c7;
   color: #2C3E50;
-  padding: 0.8rem;
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-  font-size: 0.85rem;
-  text-align: center;
-  transition: all 0.3s;
-  opacity: 0.6;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
   cursor: not-allowed;
+  opacity: 0.6;
+  transition: all 0.3s;
 }
 
+/* Ramos desbloqueados */
 .ramo.activo {
   background-color: #3498db;
-  color: white;
-  opacity: 1;
+  color: #fff;
   cursor: pointer;
+  opacity: 1;
 }
 
+/* Ramos aprobados */
 .ramo.aprobado {
   background-color: #27ae60;
-  color: white;
+  color: #fff;
 }
 
+/* Hover */
 .ramo:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
+}
+
+/* Detalle de ramo */
+#detalles {
+  background-color: #fff;
+  border-top: 2px solid #2980b9;
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
+}
+
+#detalles h2 {
+  margin-top: 0;
+  color: #2C3E50;
 }
