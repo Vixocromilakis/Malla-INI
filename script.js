@@ -165,29 +165,25 @@ function actualizarClaseRamo(div, ramo) {
 function manejarClick(div, ramo) {
   if (!div.classList.contains("activo") && !div.classList.contains("aprobado")) return;
 
-  if (aprobados.has(normalizar(ramo.nombre))) {
-    desmarcarRamoYDependientes(ramo.nombre);
+  if (aprobados.has(ramo.nombre)) {
+    aprobados.delete(ramo.nombre);
+    creditosTotales -= ramo.creditos;
   } else {
-    aprobados.add(normalizar(ramo.nombre));
+    aprobados.add(ramo.nombre);
     creditosTotales += ramo.creditos;
   }
 
-  guardarSeleccion();
   document.getElementById("creditos-total").textContent = creditosTotales;
   actualizarTodosLosRamos();
   mostrarDetalles(ramo);
 }
+
 function actualizarTodosLosRamos() {
   document.querySelectorAll(".ramo").forEach(div => {
     const nombre = div.dataset.nombre;
     const ramo = malla.flatMap(s => s.ramos).find(r => r.nombre === nombre);
     actualizarClaseRamo(div, ramo);
   });
-}
-
-function guardarSeleccion(ramosMap) {
-  const seleccionados = Object.keys(ramosMap).filter(id => ramosMap[id].seleccionado);
-  localStorage.setItem('ramosSeleccionados', JSON.stringify(seleccionados));
 }
 
 function mostrarDetalles(ramo) {
@@ -201,62 +197,7 @@ function mostrarDetalles(ramo) {
   document.getElementById("detalle-requisitos").textContent = abreRamos.length > 0 ? abreRamos.join(", ") : "Ninguno";
 }
 
-function restaurarSeleccion() {
-  const data = localStorage.getItem("ramosSeleccionados");
-  if (!data) return;
-
-  const seleccionados = JSON.parse(data);
-  seleccionados.forEach(nombre => {
-    aprobados.add(nombre);
-  });
-
-  creditosTotales = malla
-    .flatMap(s => s.ramos)
-    .filter(r => aprobados.has(normalizar(r.nombre)))
-    .reduce((sum, r) => sum + r.creditos, 0);
-
-  document.getElementById("creditos-total").textContent = creditosTotales;
-  actualizarTodosLosRamos();
-}
-
-function guardarSeleccion() {
-  const seleccionados = Array.from(aprobados);
-  localStorage.setItem("ramosSeleccionados", JSON.stringify(seleccionados));
-}
-
-function construirMapaDependenciasInversas(malla) {
-  const mapa = {};
-  malla.forEach(semestre => {
-    semestre.ramos.forEach(ramo => {
-      ramo.prereq.forEach(prereq => {
-        if (!mapa[prereq]) {
-          mapa[prereq] = [];
-        }
-        mapa[prereq].push(ramo.nombre);
-      });
-    });
-  });
-  return mapa;
-}
-
-function desmarcarRamoYDependientes(nombreRamo) {
-  if (!aprobados.has(nombreRamo)) return;
-
-  aprobados.delete(nombreRamo);
-  const ramo = malla.flatMap(s => s.ramos).find(r => r.nombre === nombreRamo);
-  if (ramo) creditosTotales -= ramo.creditos;
-
-  if (dependenciasInversas[nombreRamo]) {
-    dependenciasInversas[nombreRamo].forEach(dep => {
-      desmarcarRamoYDependientes(dep);
-    });
-  }
-}
-
-const dependenciasInversas = construirMapaDependenciasInversas(malla);
-
 document.addEventListener("DOMContentLoaded", () => {
   renderMalla();
   document.getElementById("creditos-total").textContent = creditosTotales;
-  restaurarSeleccion();
 });
