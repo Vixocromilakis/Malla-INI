@@ -1,13 +1,17 @@
 // Estructura de los ramos
-const malla = [
+const malla = {
+  semestre: X, // Número del semestre
+  ramos: [
+    { nombre: "NOMBRE RAMO", creditos: X, prereq: ["RAMO PREREQUISITO"], abre: ["RAMOS QUE ABRE"] },
+    // más ramos...
+  ]
+}, 
+  [
   {
   // SEMESTRE 1
-  'intro_negocios': {
-    nombre: 'Introducción a los Negocios Internacionales', creditos: 5, prerequisitos: [], abre: ['comercio_internacional'], semestre: 1
-  },
-  'gestion_organizaciones': {
-    nombre: 'Gestión de Organizaciones', creditos: 5, prerequisitos: [], abre: ['personas_organizaciones','marketing_estrategico','contabilidad_financiera'], semestre: 1
-  },
+  'intro_negocios': { nombre: 'Introducción a los Negocios Internacionales', creditos: 5, prerequisitos: [], abre: ['comercio_internacional'], semestre: 1 },
+  
+  'gestion_organizaciones': { nombre: 'Gestión de Organizaciones', creditos: 5, prerequisitos: [], abre: ['personas_organizaciones','marketing_estrategico','contabilidad_financiera'], semestre: 1 },
   'informatica': {
     nombre: 'Informática para los Negocios', creditos: 5, prerequisitos: [], abre: ['sistemas1'], semestre: 1
   },
