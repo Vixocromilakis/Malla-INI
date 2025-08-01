@@ -22,9 +22,10 @@ header {
 /* Contenido principal */
 main {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 2rem;
   padding: 2rem;
+  overflow-x: auto;
 }
 
 /* Contenedor por semestre */
@@ -33,6 +34,8 @@ main {
   background-color: #f9f9f9;
   padding: 1rem;
   border-radius: 8px;
+  min-width: 300px;
+  flex-shrink: 0;
 }
 
 .semestre h2 {
