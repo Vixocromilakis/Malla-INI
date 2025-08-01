@@ -135,9 +135,20 @@ function renderMalla() {
       div.textContent = ramo.nombre;
       div.dataset.nombre = ramo.nombre;
 
-      if (ramo.prereq.length === 0) div.classList.add("activo");
+      if (aprobados.has(ramo.nombre)) {
+        div.classList.add("aprobado");
+      } else if (ramo.prereq.every((req) => aprobados.has(req))) {
+        div.classList.add("activo");
+      }
 
-     function desbloquearRamos() {
+      bloque.appendChild(div);
+    });
+
+    contenedor.appendChild(bloque);
+  });
+}
+
+function desbloquearRamos() {
   malla.forEach((sem) => {
     sem.ramos.forEach((ramo) => {
       const div = Array.from(document.querySelectorAll(".ramo")).find(d => d.dataset.nombre === ramo.nombre);
@@ -164,33 +175,35 @@ function renderMalla() {
   });
 }
 
-      bloque.appendChild(div);
-    });
-
-    contenedor.appendChild(bloque);
-  });
-}
-
 function mostrarDetalles(ramo) {
   document.getElementById("detalle-nombre").textContent = ramo.nombre;
   document.getElementById("detalle-creditos").textContent = ramo.creditos;
   document.getElementById("detalle-prereq").textContent = ramo.prereq.length > 0 ? ramo.prereq.join(", ") : "Ninguno";
-  document.getElementById("detalle-requisitos").textContent = "No disponible";
+  document.getElementById("detalle-requisitos").textContent = "No disponible"; // Puedes agregar lógica futura aquí
 }
 
-function desbloquearRamos() {
-  malla.forEach((sem) => {
-    sem.ramos.forEach((ramo) => {
-      if (aprobados.has(ramo.nombre)) return;
-      const div = Array.from(document.querySelectorAll(".ramo")).find(d => d.dataset.nombre === ramo.nombre);
-      if (!div) return;
-      if (ramo.prereq.every((req) => aprobados.has(req))) {
-        div.classList.add("activo");
-        div.style.cursor = "pointer";
-        div.style.opacity = "1";
-      }
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  renderMalla();
+  desbloquearRamos();
+
+  document.addEventListener("click", (e) => {
+    const div = e.target.closest(".ramo");
+    if (!div || !div.classList.contains("activo")) return;
+
+    const nombre = div.dataset.nombre;
+    const ramo = malla.flatMap(s => s.ramos).find(r => r.nombre === nombre);
+
+    if (!aprobados.has(nombre)) {
+      aprobados.add(nombre);
+      creditosTotales += ramo.creditos;
+    } else {
+      aprobados.delete(nombre);
+      creditosTotales -= ramo.creditos;
+    }
+
+    document.getElementById("creditos-total").textContent = creditosTotales;
+    renderMalla();
+    desbloquearRamos();
+    mostrarDetalles(ramo);
   });
-}
-
-document.addEventListener("DOMContentLoaded", renderMalla);
+});
