@@ -186,6 +186,23 @@ function actualizarTodosLosRamos() {
   });
 }
 
+function guardarSeleccion(ramosMap) {
+  const seleccionados = Object.keys(ramosMap).filter(id => ramosMap[id].seleccionado);
+  localStorage.setItem('ramosSeleccionados', JSON.stringify(seleccionados));
+}
+
+// Restaura los ramos seleccionados al cargar la página
+function restaurarSeleccion(ramosMap) {
+  const seleccionados = JSON.parse(localStorage.getItem('ramosSeleccionados') || '[]');
+  seleccionados.forEach(id => {
+    if (ramosMap[id]) {
+      ramosMap[id].seleccionado = true;
+      ramosMap[id].elemento.classList.add('seleccionado');
+    }
+  });
+  actualizarCreditos();
+}
+
 function mostrarDetalles(ramo) {
   document.getElementById("detalle-nombre").textContent = ramo.nombre;
   document.getElementById("detalle-creditos").textContent = ramo.creditos;
