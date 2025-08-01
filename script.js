@@ -211,10 +211,6 @@ const ramos = {
 // (Las funciones de lógica permanecen igual)
 // crearMalla(), actualizarEstado(), seleccionarRamo(), mostrarDetalles(), window.onload = crearMalla;
 
-  }
-
-];
-
 // Búsqueda por nombre
 function buscarRamo(nombreBuscado) {
   const resultados = document.querySelectorAll(".ramo");
