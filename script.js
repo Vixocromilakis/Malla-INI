@@ -165,22 +165,18 @@ function actualizarClaseRamo(div, ramo) {
 function manejarClick(div, ramo) {
   if (!div.classList.contains("activo") && !div.classList.contains("aprobado")) return;
 
-  if (aprobados.has(ramo.nombre)) {
+  if (aprobados.has(normalizar(ramo.nombre))) {
     desmarcarRamoYDependientes(ramo.nombre);
   } else {
-    aprobados.add(ramo.nombre);
+    aprobados.add(normalizar(ramo.nombre));
     creditosTotales += ramo.creditos;
   }
 
+  guardarSeleccion();
   document.getElementById("creditos-total").textContent = creditosTotales;
   actualizarTodosLosRamos();
   mostrarDetalles(ramo);
 }
-  document.getElementById("creditos-total").textContent = creditosTotales;
-  actualizarTodosLosRamos();
-  mostrarDetalles(ramo);
-}
-
 function actualizarTodosLosRamos() {
   document.querySelectorAll(".ramo").forEach(div => {
     const nombre = div.dataset.nombre;
@@ -203,6 +199,29 @@ function mostrarDetalles(ramo) {
     .filter(r => r.prereq.includes(ramo.nombre))
     .map(r => r.nombre);
   document.getElementById("detalle-requisitos").textContent = abreRamos.length > 0 ? abreRamos.join(", ") : "Ninguno";
+}
+
+function restaurarSeleccion() {
+  const data = localStorage.getItem("ramosSeleccionados");
+  if (!data) return;
+
+  const seleccionados = JSON.parse(data);
+  seleccionados.forEach(nombre => {
+    aprobados.add(nombre);
+  });
+
+  creditosTotales = malla
+    .flatMap(s => s.ramos)
+    .filter(r => aprobados.has(normalizar(r.nombre)))
+    .reduce((sum, r) => sum + r.creditos, 0);
+
+  document.getElementById("creditos-total").textContent = creditosTotales;
+  actualizarTodosLosRamos();
+}
+
+function guardarSeleccion() {
+  const seleccionados = Array.from(aprobados);
+  localStorage.setItem("ramosSeleccionados", JSON.stringify(seleccionados));
 }
 
 function construirMapaDependenciasInversas(malla) {
@@ -239,4 +258,5 @@ const dependenciasInversas = construirMapaDependenciasInversas(malla);
 document.addEventListener("DOMContentLoaded", () => {
   renderMalla();
   document.getElementById("creditos-total").textContent = creditosTotales;
+  restaurarSeleccion();
 });
