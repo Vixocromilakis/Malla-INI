@@ -166,13 +166,16 @@ function manejarClick(div, ramo) {
   if (!div.classList.contains("activo") && !div.classList.contains("aprobado")) return;
 
   if (aprobados.has(ramo.nombre)) {
-    aprobados.delete(ramo.nombre);
-    creditosTotales -= ramo.creditos;
+    desmarcarRamoYDependientes(ramo.nombre);
   } else {
     aprobados.add(ramo.nombre);
     creditosTotales += ramo.creditos;
   }
 
+  document.getElementById("creditos-total").textContent = creditosTotales;
+  actualizarTodosLosRamos();
+  mostrarDetalles(ramo);
+}
   document.getElementById("creditos-total").textContent = creditosTotales;
   actualizarTodosLosRamos();
   mostrarDetalles(ramo);
@@ -191,18 +194,6 @@ function guardarSeleccion(ramosMap) {
   localStorage.setItem('ramosSeleccionados', JSON.stringify(seleccionados));
 }
 
-// Restaura los ramos seleccionados al cargar la página
-function restaurarSeleccion(ramosMap) {
-  const seleccionados = JSON.parse(localStorage.getItem('ramosSeleccionados') || '[]');
-  seleccionados.forEach(id => {
-    if (ramosMap[id]) {
-      ramosMap[id].seleccionado = true;
-      ramosMap[id].elemento.classList.add('seleccionado');
-    }
-  });
-  actualizarCreditos();
-}
-
 function mostrarDetalles(ramo) {
   document.getElementById("detalle-nombre").textContent = ramo.nombre;
   document.getElementById("detalle-creditos").textContent = ramo.creditos;
@@ -213,6 +204,37 @@ function mostrarDetalles(ramo) {
     .map(r => r.nombre);
   document.getElementById("detalle-requisitos").textContent = abreRamos.length > 0 ? abreRamos.join(", ") : "Ninguno";
 }
+
+function construirMapaDependenciasInversas(malla) {
+  const mapa = {};
+  malla.forEach(semestre => {
+    semestre.ramos.forEach(ramo => {
+      ramo.prereq.forEach(prereq => {
+        if (!mapa[prereq]) {
+          mapa[prereq] = [];
+        }
+        mapa[prereq].push(ramo.nombre);
+      });
+    });
+  });
+  return mapa;
+}
+
+function desmarcarRamoYDependientes(nombreRamo) {
+  if (!aprobados.has(nombreRamo)) return;
+
+  aprobados.delete(nombreRamo);
+  const ramo = malla.flatMap(s => s.ramos).find(r => r.nombre === nombreRamo);
+  if (ramo) creditosTotales -= ramo.creditos;
+
+  if (dependenciasInversas[nombreRamo]) {
+    dependenciasInversas[nombreRamo].forEach(dep => {
+      desmarcarRamoYDependientes(dep);
+    });
+  }
+}
+
+const dependenciasInversas = construirMapaDependenciasInversas(malla);
 
 document.addEventListener("DOMContentLoaded", () => {
   renderMalla();
