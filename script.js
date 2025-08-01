@@ -190,7 +190,11 @@ function mostrarDetalles(ramo) {
   document.getElementById("detalle-nombre").textContent = ramo.nombre;
   document.getElementById("detalle-creditos").textContent = ramo.creditos;
   document.getElementById("detalle-prereq").textContent = ramo.prereq.length > 0 ? ramo.prereq.join(", ") : "Ninguno";
-  document.getElementById("detalle-requisitos").textContent = "No disponible";
+
+  const abreRamos = malla.flatMap(s => s.ramos)
+    .filter(r => r.prereq.includes(ramo.nombre))
+    .map(r => r.nombre);
+  document.getElementById("detalle-requisitos").textContent = abreRamos.length > 0 ? abreRamos.join(", ") : "Ninguno";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
