@@ -1,7 +1,3 @@
-function normalizar(nombre) {
-  return nombre.trim().toLowerCase();
-}
-
 const malla = [
   {
     semestre: 1,
@@ -150,9 +146,9 @@ function renderMalla() {
 }
 
 function actualizarClaseRamo(div, ramo) {
-  const cumplidos = ramo.prereq.every((req) => aprobados.has(normalizar(req)));
+  const cumplidos = ramo.prereq.every((req) => aprobados.has(req));
   div.classList.remove("activo", "aprobado");
-  if (aprobados.has(normalizar(ramo.nombre))) {
+  if (aprobados.has(ramo.nombre)) {
     div.classList.add("aprobado");
     div.style.cursor = "pointer";
     div.style.opacity = "1";
@@ -211,7 +207,7 @@ function restaurarSeleccion() {
 
   const seleccionados = JSON.parse(data);
   seleccionados.forEach(nombre => {
-    aprobados.add(normalizar(nombre));
+    aprobados.add(nombre);
   });
 
   creditosTotales = malla
@@ -244,19 +240,6 @@ function construirMapaDependenciasInversas(malla) {
 }
 
 function desmarcarRamoYDependientes(nombreRamo) {
-  const clave = normalizar(nombreRamo);
-  if (!aprobados.has(clave)) return;
-
-  aprobados.delete(clave);
-  const ramo = malla.flatMap(s => s.ramos).find(r => normalizar(r.nombre) === clave);
-  if (ramo) creditosTotales -= ramo.creditos;
-
-  if (dependenciasInversas[clave]) {
-    dependenciasInversas[clave].forEach(dep => {
-      desmarcarRamoYDependientes(dep);
-    });
-  }
-}
   if (!aprobados.has(nombreRamo)) return;
 
   aprobados.delete(nombreRamo);
@@ -274,7 +257,6 @@ const dependenciasInversas = construirMapaDependenciasInversas(malla);
 
 document.addEventListener("DOMContentLoaded", () => {
   renderMalla();
-  actualizarTodosLosRamos();
   document.getElementById("creditos-total").textContent = creditosTotales;
   restaurarSeleccion();
 });
