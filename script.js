@@ -1,188 +1,215 @@
-// Malla curricular completa con prerrequisitos dinámicos
-const malla = [
-  {
-    "semestre": 1,
-    "ramos": [
-      {
-        "nombre": "INTRODUCCIÓN A LOS NEGOCIOS INTERNACIONALES",
-        "creditos": 5,
-        "abre": ["comercio Internacional"],
-        "prereq": []
-      },
-      {
-        "nombre": "GESTIÓN DE ORGANIZACIONES",
-        "creditos": 5,
-        "abre": ["Personas y organizaciones", "Marketing Estrategico y contabilidad financiera"],
-        "prereq": []
-      },
-      {
-        "nombre": "INFORMÁTICA PARA LOS NEGOCIOS",
-        "creditos": 5,
-        "abre": ["sistemas de informacion"],
-        "prereq": []
-      },
-      {
-        "nombre": "ÁLGEBRA",
-        "creditos": 6,
-        "abre": ["calculo", "contabilidad financiera y calculo 2"],
-        "prereq": []
-      },
-      {
-        "nombre": "POLÍTICA Y FORMACIÓN CIUDADANA",
-        "creditos": 3,
-        "abre": ["derecho empresarial"],
-        "prereq": []
-      },
-      {
-        "nombre": "AUTOCONOCIMIENTO",
-        "creditos": 3,
-        "abre": [],
-        "prereq": []
-      },
-      {
-        "nombre": "HABILIDADES COMUNICACIONALES",
-        "creditos": 4,
-        "abre": ["inlges 1"],
-        "prereq": []
-      }
-    ]
+// Malla curricular completa con créditos y relaciones
+const ramos = {
+  // SEMESTRE 1
+  'intro_negocios': {
+    nombre: 'Introducción a los Negocios Internacionales', creditos: 5, prerequisitos: [], abre: ['comercio_internacional'], semestre: 1
   },
-  {
-    "semestre": 2,
-    "ramos": [
-      {
-        "nombre": "HISTORIA DE LAS RELACIONES INTERNACIONALES",
-        "creditos": 5,
-        "abre": ["comercio internacional"],
-        "prereq": []
-      },
-      {
-        "nombre": "GEOGRAFÍA POLÍTICA Y ECONÓMICA",
-        "creditos": 5,
-        "abre": ["comercio internacional"],
-        "prereq": []
-      },
-      {
-        "nombre": "PSICOLOGÍA SOCIAL Y ORGANIZACIONAL",
-        "creditos": 5,
-        "abre": ["personas y organizaciones"],
-        "prereq": []
-      },
-      {
-        "nombre": "SISTEMAS DE INFORMACIÓN I",
-        "creditos": 4,
-        "abre": ["sistemas de informacion 2"],
-        "prereq": ["INFORMÁTICA PARA LOS NEGOCIOS"]
-      },
-      {
-        "nombre": "CÁLCULO",
-        "creditos": 5,
-        "abre": ["estadísticas para los negocios", "Microeconomia", "practicas intermedias"],
-        "prereq": ["ÁLGEBRA"]
-      },
-      {
-        "nombre": "INGLÉS I",
-        "creditos": 5,
-        "abre": ["ingles 2"],
-        "prereq": ["HABILIDADES COMUNICACIONALES"]
-      }
-    ]
+  'gestion_organizaciones': {
+    nombre: 'Gestión de Organizaciones', creditos: 5, prerequisitos: [], abre: ['personas_organizaciones','marketing_estrategico','contabilidad_financiera'], semestre: 1
   },
-    {
-    "semestre": 3,
-    "ramos": [
-      { "nombre": "PERSONAS Y ORGANIZACIONES", "creditos": 5, "abre": ["SIMULACIÓN DE NEGOCIOS"], "prereq": ["GESTIÓN DE ORGANIZACIONES", "PSICOLOGÍA SOCIAL Y ORGANIZACIONAL"] },
-      { "nombre": "MARKETING ESTRATÉGICO", "creditos": 5, "abre": ["SIMULACIÓN DE NEGOCIOS", "MARKETING OPERATIVO", "METODOLOGÍA DE INVESTIGACIÓN DE NEGOCIOS INTERNACIONALES"], "prereq": ["GESTIÓN DE ORGANIZACIONES"] },
-      { "nombre": "CÁLCULO II", "creditos": 5, "abre": ["MÉTODOS CUANTITATIVOS"], "prereq": ["ÁLGEBRA"] },
-      { "nombre": "CONTABILIDAD FINANCIERA", "creditos": 5, "abre": ["SIMULACIÓN DE NEGOCIOS", "CONTABILIDAD ADMINISTRATIVA"], "prereq": ["GESTIÓN DE ORGANIZACIONES", "ÁLGEBRA"] },
-      { "nombre": "DERECHO EMPRESARIAL", "creditos": 4, "abre": ["DERECHO COMERCIAL INTERNACIONAL"], "prereq": ["POLÍTICA Y FORMACIÓN CIUDADANA"] },
-      { "nombre": "INGLÉS II", "creditos": 5, "abre": ["INGLÉS III"], "prereq": ["INGLÉS I"] }
-    ]
+  'informatica': {
+    nombre: 'Informática para los Negocios', creditos: 5, prerequisitos: [], abre: ['sistemas1'], semestre: 1
   },
-  {
-    "semestre": 4,
-    "ramos": [
-      { "nombre": "SIMULACIÓN DE NEGOCIOS", "creditos": 7, "abre": ["PRÁCTICAS INTERMEDIAS", "TEORÍA DEL CONFLICTO Y NEGOCIACIÓN"], "prereq": ["CONTABILIDAD FINANCIERA", "MARKETING ESTRATÉGICO", "PERSONAS Y ORGANIZACIONES"] },
-      { "nombre": "MARKETING OPERATIVO", "creditos": 5, "abre": [], "prereq": ["MARKETING ESTRATÉGICO"] },
-      { "nombre": "ESTADÍSTICA PARA LOS NEGOCIOS", "creditos": 5, "abre": ["MÉTODOS CUANTITATIVOS", "METODOLOGÍA DE INVESTIGACIÓN DE NEGOCIOS INTERNACIONALES"], "prereq": ["CÁLCULO"] },
-      { "nombre": "CONTABILIDAD ADMINISTRATIVA", "creditos": 5, "abre": ["GESTIÓN FINANCIERA", "PRÁCTICAS INTERMEDIAS", "GESTIÓN DE OPERACIONES"], "prereq": ["CONTABILIDAD FINANCIERA"] },
-      { "nombre": "MICROECONOMÍA", "creditos": 5, "abre": ["MACROECONOMÍA"], "prereq": ["CÁLCULO"] },
-      { "nombre": "INGLÉS III", "creditos": 4, "abre": ["INGLÉS IV", "NEGOCIACIONES INTERNACIONALES"], "prereq": ["INGLÉS II"] }
-    ]
-  }
-];
-
-  {
-    "semestre": 5,
-    "ramos": [
-      { "nombre": "SISTEMAS DE INFORMACIÓN II", "creditos": 4, "abre": ["SIMULACIÓN DE NEGOCIOS II"], "prereq": ["SISTEMAS DE INFORMACIÓN I"] },
-      { "nombre": "MÉTODOS CUANTITATIVOS", "creditos": 5, "abre": ["GESTIÓN DE OPERACIONES"], "prereq": ["CÁLCULO II", "ESTADÍSTICA PARA LOS NEGOCIOS"] },
-      { "nombre": "GESTIÓN FINANCIERA", "creditos": 5, "abre": ["FINANZAS CORPORATIVAS"], "prereq": ["CONTABILIDAD ADMINISTRATIVA"] },
-      { "nombre": "COMERCIO INTERNACIONAL", "creditos": 5, "abre": ["GESTIÓN ADUANERA Y DOCUMENTAL", "DERECHO COMERCIAL INTERNACIONAL"], "prereq": ["INTRODUCCIÓN A LOS NEGOCIOS INTERNACIONALES", "HISTORIA DE LAS RELACIONES INTERNACIONALES", "GEOGRAFÍA POLÍTICA Y ECONÓMICA"] },
-      { "nombre": "TALLER PERFIL UV 1", "creditos": 2, "abre": [] , "prereq": [] },
-      { "nombre": "INGLÉS IV", "creditos": 5, "abre": ["ACADEMIC COMMUNICATIONAL ENGLISH", "ENGLISH FOR INTERNATIONAL MANAGEMENT", "ENGLISH FOR FOREIGN TRADE", "SIMULACIÓN DE NEGOCIOS II"], "prereq": ["INGLÉS III"] },
-      { "nombre": "PRÁCTICAS INTERMEDIAS", "creditos": 4, "abre": [], "prereq": ["CÁLCULO", "SIMULACIÓN DE NEGOCIOS", "CONTABILIDAD ADMINISTRATIVA"] }
-    ]
+  'algebra': {
+    nombre: 'Álgebra', creditos: 6, prerequisitos: [], abre: ['calculo','contabilidad_financiera','calculo2'], semestre: 1
   },
-  {
-    "semestre": 6,
-    "ramos": [
-      { "nombre": "TEORÍA DEL CONFLICTO Y NEGOCIACIÓN", "creditos": 5, "abre": ["NEGOCIACIONES INTERNACIONALES", "PRÁCTICA PROFESIONAL"], "prereq": ["SIMULACIÓN DE NEGOCIOS"] },
-      { "nombre": "GESTIÓN DE OPERACIONES", "creditos": 5, "abre": ["TRANSPORTE Y DISTRIBUCIÓN INTERNACIONAL", "PRÁCTICA PROFESIONAL"], "prereq": ["CONTABILIDAD ADMINISTRATIVA", "MÉTODOS CUANTITATIVOS"] },
-      { "nombre": "MACROECONOMÍA", "creditos": 5, "abre": ["ECONOMÍA INTERNACIONAL", "SIMULACIÓN DE NEGOCIOS II", "PRÁCTICA PROFESIONAL"], "prereq": ["MICROECONOMÍA"] },
-      { "nombre": "DERECHO COMERCIAL INTERNACIONAL", "creditos": 4, "abre": ["INTEGRACIÓN COMERCIAL INTERNACIONAL", "PRÁCTICA PROFESIONAL"], "prereq": ["DERECHO EMPRESARIAL", "COMERCIO INTERNACIONAL"] },
-      { "nombre": "GESTIÓN ADUANERA Y DOCUMENTAL", "creditos": 5, "abre": ["LOGÍSTICA Y SEGUROS INTERNACIONALES", "GESTIÓN BANCARIA INTERNACIONAL", "PRÁCTICA PROFESIONAL"], "prereq": ["COMERCIO INTERNACIONAL"] },
-      { "nombre": "TALLER PERFIL UV 2", "creditos": 2, "abre": ["PRÁCTICA PROFESIONAL"], "prereq": [] },
-      { "nombre": "ACADEMIC COMMUNICATIONAL ENGLISH", "creditos": 4, "abre": ["PRÁCTICA PROFESIONAL"], "prereq": ["INGLÉS IV"] }
-    ]
-  }
-
-  {
-    "semestre": 7,
-    "ramos": [
-      { "nombre": "NEGOCIACIONES INTERNACIONALES", "creditos": 4, "abre": ["ELECTIVO DE ACTUALIZACIÓN", "FORMACIÓN CIUDADANA GLOBAL"], "prereq": ["TEORÍA DEL CONFLICTO Y NEGOCIACIÓN", "INGLÉS III"] },
-      { "nombre": "FINANZAS CORPORATIVAS", "creditos": 5, "abre": ["FORMULACIÓN Y EVALUACIÓN DE PROYECTOS", "ELECTIVO DE ACTUALIZACIÓN", "FINANZAS INTERNACIONALES"], "prereq": ["GESTIÓN FINANCIERA"] },
-      { "nombre": "ECONOMÍA INTERNACIONAL", "creditos": 4, "abre": ["ELECTIVO DE ACTUALIZACIÓN", "ANÁLISIS DE ENTORNO Y COYUNTURA"], "prereq": ["MACROECONOMÍA"] },
-      { "nombre": "LOGÍSTICA Y SEGUROS INTERNACIONALES", "creditos": 5, "abre": ["TRANSPORTE Y DISTRIBUCIÓN INTERNACIONAL", "ELECTIVO DE ACTUALIZACIÓN"], "prereq": ["GESTIÓN ADUANERA Y DOCUMENTAL"] },
-      { "nombre": "METODOLOGÍA DE INVESTIGACIÓN DE NEGOCIOS INTERNACIONALES", "creditos": 4, "abre": ["MARKETING INTERNACIONAL Y GLOBAL", "SIMULACIÓN DE NEGOCIOS II", "ELECTIVO DE ACTUALIZACIÓN"], "prereq": ["ESTADÍSTICA PARA LOS NEGOCIOS", "MARKETING ESTRATÉGICO"] },
-      { "nombre": "TALLER PERFIL UV 3", "creditos": 2, "abre": ["ELECTIVO DE ACTUALIZACIÓN"], "prereq": [] },
-      { "nombre": "ENGLISH FOR INTERNATIONAL MANAGEMENT", "creditos": 4, "abre": ["ELECTIVO DE ACTUALIZACIÓN"], "prereq": ["INGLÉS IV"] }
-    ]
+  'formacion_ciudadana': {
+    nombre: 'Política y Formación Ciudadana', creditos: 3, prerequisitos: [], abre: ['derecho_empresarial'], semestre: 1
   },
-  {
-    "semestre": 8,
-    "ramos": [
-      { "nombre": "INTEGRACIÓN COMERCIAL INTERNACIONAL", "creditos": 4, "abre": ["DIRECCIÓN Y GESTIÓN INTERNACIONAL", "ANÁLISIS DE ENTORNO Y COYUNTURA"], "prereq": ["DERECHO COMERCIAL INTERNACIONAL"] },
-      { "nombre": "MARKETING INTERNACIONAL Y GLOBAL", "creditos": 4, "abre": ["DIRECCIÓN Y GESTIÓN INTERNACIONAL"], "prereq": ["METODOLOGÍA DE INVESTIGACIÓN DE NEGOCIOS INTERNACIONALES"] },
-      { "nombre": "FORMULACIÓN Y EVALUACIÓN DE PROYECTOS", "creditos": 4, "abre": ["DIRECCIÓN Y GESTIÓN INTERNACIONAL"], "prereq": ["FINANZAS CORPORATIVAS"] },
-      { "nombre": "TRANSPORTE Y DISTRIBUCIÓN INTERNACIONAL", "creditos": 5, "abre": [], "prereq": ["GESTIÓN DE OPERACIONES", "LOGÍSTICA Y SEGUROS INTERNACIONALES"] },
-      { "nombre": "GESTIÓN BANCARIA INTERNACIONAL", "creditos": 5, "abre": [], "prereq": ["GESTIÓN ADUANERA Y DOCUMENTAL"] },
-      { "nombre": "ENGLISH FOR FOREIGN TRADE", "creditos": 4, "abre": [], "prereq": ["INGLÉS IV"] },
-      { "nombre": "SIMULACIÓN DE NEGOCIOS II", "creditos": 5, "abre": ["SEMINARIO DE TÍTULO"], "prereq": ["MACROECONOMÍA", "SISTEMAS DE INFORMACIÓN II", "METODOLOGÍA DE INVESTIGACIÓN DE NEGOCIOS INTERNACIONALES", "INGLÉS IV"] }
-    ]
+  'autoconocimiento': {
+    nombre: 'Autoconocimiento', creditos: 3, prerequisitos: [], abre: [], semestre: 1
+  },
+  'habilidades_comunicacionales': {
+    nombre: 'Habilidades Comunicacionales', creditos: 4, prerequisitos: [], abre: ['ingles1'], semestre: 1
   },
 
-  {
-    "semestre": 9,
-    "ramos": [
-      { "nombre": "DIRECCIÓN Y GESTIÓN INTERNACIONAL", "creditos": 5, "abre": [], "prereq": ["INTEGRACIÓN COMERCIAL INTERNACIONAL", "MARKETING INTERNACIONAL Y GLOBAL", "FORMULACIÓN Y EVALUACIÓN DE PROYECTOS"] },
-      { "nombre": "ELECTIVO DE ACTUALIZACIÓN", "creditos": 4, "abre": [], "prereq": ["NEGOCIACIONES INTERNACIONALES", "FINANZAS CORPORATIVAS", "ECONOMÍA INTERNACIONAL", "LOGÍSTICA Y SEGUROS INTERNACIONALES", "METODOLOGÍA DE INVESTIGACIÓN DE NEGOCIOS INTERNACIONALES", "TALLER PERFIL UV 3", "ENGLISH FOR INTERNATIONAL MANAGEMENT"] },
-      { "nombre": "FINANZAS INTERNACIONALES", "creditos": 5, "abre": [], "prereq": ["FINANZAS CORPORATIVAS"] },
-      { "nombre": "ANÁLISIS DE ENTORNO Y COYUNTURA", "creditos": 5, "abre": [], "prereq": ["ECONOMÍA INTERNACIONAL", "INTEGRACIÓN COMERCIAL INTERNACIONAL"] },
-      { "nombre": "FORMACIÓN CIUDADANA GLOBAL", "creditos": 3, "abre": [], "prereq": ["NEGOCIACIONES INTERNACIONALES"] },
-      { "nombre": "CURSO I DE ESPECIALIZACIÓN", "creditos": 0, "abre": [], "prereq": [] }
-    ]
+  // SEMESTRE 2
+  'historia_relaciones': {
+    nombre: 'Historia de las Relaciones Internacionales', creditos: 5, prerequisitos: [], abre: ['comercio_internacional'], semestre: 2
   },
-  {
-    "semestre": 10,
-    "ramos": [
-      { "nombre": "PRÁCTICA PROFESIONAL", "creditos": 16, "abre": [], "prereq": ["TEORÍA DEL CONFLICTO Y NEGOCIACIÓN", "GESTIÓN DE OPERACIONES", "MACROECONOMÍA", "DERECHO COMERCIAL INTERNACIONAL", "GESTIÓN ADUANERA Y DOCUMENTAL", "TALLER PERFIL UV 2", "ACADEMIC COMMUNICATIONAL ENGLISH"] },
-      { "nombre": "SEMINARIO DE TÍTULO", "creditos": 12, "abre": [], "prereq": ["SIMULACIÓN DE NEGOCIOS II"] },
-      { "nombre": "CURSO II DE ESPECIALIZACIÓN", "creditos": 0, "abre": [], "prereq": [] }
-    ]
-  }
+  'geografia': {
+    nombre: 'Geografía Política y Económica', creditos: 5, prerequisitos: [], abre: ['comercio_internacional'], semestre: 2
+  },
+  'psicologia': {
+    nombre: 'Psicología Social y Organizacional', creditos: 5, prerequisitos: [], abre: ['personas_organizaciones'], semestre: 2
+  },
+  'sistemas1': {
+    nombre: 'Sistemas de Información I', creditos: 4, prerequisitos: ['informatica'], abre: ['sistemas2'], semestre: 2
+  },
+  'calculo': {
+    nombre: 'Cálculo', creditos: 5, prerequisitos: ['algebra'], abre: ['estadisticas','microeconomia','practicas'], semestre: 2
+  },
+  'ingles1': {
+    nombre: 'Inglés I', creditos: 5, prerequisitos: ['habilidades_comunicacionales'], abre: ['ingles2'], semestre: 2
+  },
 
-];
+  // SEMESTRE 3
+  'personas_organizaciones': {
+    nombre: 'Personas y Organizaciones', creditos: 5, prerequisitos: ['gestion_organizaciones','psicologia'], abre: ['simulacion1'], semestre: 3
+  },
+  'marketing_estrategico': {
+    nombre: 'Marketing Estratégico', creditos: 5, prerequisitos: ['gestion_organizaciones'], abre: ['simulacion1','marketing_operativo','metodologia'], semestre: 3
+  },
+  'calculo2': {
+    nombre: 'Cálculo II', creditos: 5, prerequisitos: ['algebra'], abre: ['metodos_cuantitativos'], semestre: 3
+  },
+  'contabilidad_financiera': {
+    nombre: 'Contabilidad Financiera', creditos: 5, prerequisitos: ['algebra','gestion_organizaciones'], abre: ['simulacion1','contabilidad_administrativa'], semestre: 3
+  },
+  'derecho_empresarial': {
+    nombre: 'Derecho Empresarial', creditos: 4, prerequisitos: ['formacion_ciudadana'], abre: ['derecho_comercial'], semestre: 3
+  },
+  'ingles2': {
+    nombre: 'Inglés II', creditos: 5, prerequisitos: ['ingles1'], abre: ['ingles3'], semestre: 3
+  },
+
+  // SEMESTRE 4
+  'simulacion1': {
+    nombre: 'Simulación de Negocios', creditos: 7, prerequisitos: ['personas_organizaciones','marketing_estrategico','contabilidad_financiera'], abre: ['practicas','negociacion'], semestre: 4
+  },
+  'marketing_operativo': {
+    nombre: 'Marketing Operativo', creditos: 5, prerequisitos: ['marketing_estrategico'], abre: [], semestre: 4
+  },
+  'estadisticas': {
+    nombre: 'Estadística para los Negocios', creditos: 5, prerequisitos: ['calculo'], abre: ['metodos_cuantitativos','metodologia'], semestre: 4
+  },
+  'contabilidad_administrativa': {
+    nombre: 'Contabilidad Administrativa', creditos: 5, prerequisitos: ['contabilidad_financiera'], abre: ['gestion_financiera','practicas','operaciones'], semestre: 4
+  },
+  'microeconomia': {
+    nombre: 'Microeconomía', creditos: 5, prerequisitos: ['calculo'], abre: ['macroeconomia'], semestre: 4
+  },
+  'ingles3': {
+    nombre: 'Inglés III', creditos: 4, prerequisitos: ['ingles2'], abre: ['ingles4','negociaciones'], semestre: 4
+  },
+
+  // SEMESTRE 5
+  'sistemas2': {
+    nombre: 'Sistemas de Información II', creditos: 4, prerequisitos: ['sistemas1'], abre: ['simulacion2'], semestre: 5
+  },
+  'metodos_cuantitativos': {
+    nombre: 'Métodos Cuantitativos', creditos: 5, prerequisitos: ['calculo2','estadisticas'], abre: ['operaciones'], semestre: 5
+  },
+  'gestion_financiera': {
+    nombre: 'Gestión Financiera', creditos: 5, prerequisitos: ['contabilidad_administrativa'], abre: ['finanzas_corporativas'], semestre: 5
+  },
+  'comercio_internacional': {
+    nombre: 'Comercio Internacional', creditos: 5, prerequisitos: ['intro_negocios','historia_relaciones','geografia'], abre: ['gestion_aduanera','derecho_comercial'], semestre: 5
+  },
+  'perfil1': {
+    nombre: 'Taller Perfil UV 1', creditos: 2, prerequisitos: [], abre: [], semestre: 5
+  },
+  'ingles4': {
+    nombre: 'Inglés IV', creditos: 5, prerequisitos: ['ingles3'], abre: ['english_academic','english_management','english_trade','simulacion2'], semestre: 5
+  },
+  'practicas': {
+    nombre: 'Prácticas Intermedias', creditos: 4, prerequisitos: ['calculo','contabilidad_administrativa','simulacion1'], abre: [], semestre: 5
+  },
+
+  // SEMESTRE 6
+  'negociacion': {
+    nombre: 'Teoría del Conflicto y Negociación', creditos: 5, prerequisitos: ['simulacion1'], abre: ['negociaciones','practica'], semestre: 6
+  },
+  'operaciones': {
+    nombre: 'Gestión de Operaciones', creditos: 5, prerequisitos: ['contabilidad_administrativa','metodos_cuantitativos'], abre: ['transporte','practica'], semestre: 6
+  },
+  'macroeconomia': {
+    nombre: 'Macroeconomía', creditos: 5, prerequisitos: ['microeconomia'], abre: ['economia_internacional','simulacion2','practica'], semestre: 6
+  },
+  'derecho_comercial': {
+    nombre: 'Derecho Comercial Internacional', creditos: 4, prerequisitos: ['derecho_empresarial','comercio_internacional'], abre: ['integracion','practica'], semestre: 6
+  },
+  'gestion_aduanera': {
+    nombre: 'Gestión Aduanera y Documental', creditos: 5, prerequisitos: ['comercio_internacional'], abre: ['logistica','bancaria','practica'], semestre: 6
+  },
+  'perfil2': {
+    nombre: 'Taller Perfil UV 2', creditos: 2, prerequisitos: ['perfil1'], abre: ['practica'], semestre: 6
+  },
+  'english_academic': {
+    nombre: 'Academic Communicational English', creditos: 4, prerequisitos: ['ingles4'], abre: ['practica'], semestre: 6
+  },
+
+  // SEMESTRE 7
+  'negociaciones': {
+    nombre: 'Negociaciones Internacionales', creditos: 4, prerequisitos: ['ingles3','negociacion'], abre: ['electivo','ciudadana_global'], semestre: 7
+  },
+  'finanzas_corporativas': {
+    nombre: 'Finanzas Corporativas', creditos: 5, prerequisitos: ['gestion_financiera'], abre: ['proyectos','electivo','finanzas_internacionales'], semestre: 7
+  },
+  'economia_internacional': {
+    nombre: 'Economía Internacional', creditos: 4, prerequisitos: ['macroeconomia'], abre: ['electivo','coyuntura'], semestre: 7
+  },
+  'logistica': {
+    nombre: 'Logística y Seguros Internacionales', creditos: 5, prerequisitos: ['gestion_aduanera'], abre: ['transporte','electivo'], semestre: 7
+  },
+  'metodologia': {
+    nombre: 'Metodología de Investigación de Negocios Internacionales', creditos: 4, prerequisitos: ['estadisticas','marketing_estrategico'], abre: ['marketing_global','simulacion2','electivo'], semestre: 7
+  },
+  'perfil3': {
+    nombre: 'Taller Perfil UV 3', creditos: 2, prerequisitos: ['perfil2'], abre: ['electivo'], semestre: 7
+  },
+  'english_management': {
+    nombre: 'English for International Management', creditos: 4, prerequisitos: ['ingles4'], abre: ['electivo'], semestre: 7
+  },
+
+};
+
+// SEMESTRE 8
+  'integracion': {
+    nombre: 'Integración Comercial Internacional', creditos: 4, prerequisitos: ['derecho_comercial'], abre: ['direccion','coyuntura'], semestre: 8
+  },
+  'marketing_global': {
+    nombre: 'Marketing Internacional y Global', creditos: 4, prerequisitos: ['metodologia'], abre: ['direccion'], semestre: 8
+  },
+  'proyectos': {
+    nombre: 'Formulación y Evaluación de Proyectos', creditos: 4, prerequisitos: ['finanzas_corporativas'], abre: ['direccion'], semestre: 8
+  },
+  'transporte': {
+    nombre: 'Transporte y Distribución Internacional', creditos: 5, prerequisitos: ['logistica','operaciones'], abre: [], semestre: 8
+  },
+  'bancaria': {
+    nombre: 'Gestión Bancaria Internacional', creditos: 5, prerequisitos: ['gestion_aduanera'], abre: [], semestre: 8
+  },
+  'english_trade': {
+    nombre: 'English for Foreign Trade', creditos: 4, prerequisitos: ['ingles4'], abre: [], semestre: 8
+  },
+  'simulacion2': {
+    nombre: 'Simulación de Negocios II', creditos: 5, prerequisitos: ['sistemas2','english_trade','macroeconomia','metodologia'], abre: ['seminario'], semestre: 8
+  },
+
+  // SEMESTRE 9
+  'direccion': {
+    nombre: 'Dirección y Gestión Internacional', creditos: 5, prerequisitos: ['integracion','marketing_global','proyectos'], abre: [], semestre: 9
+  },
+  'electivo': {
+    nombre: 'Electivo de Actualización', creditos: 4, prerequisitos: ['negociaciones','finanzas_corporativas','economia_internacional','logistica','metodologia','perfil3','english_management'], abre: [], semestre: 9
+  },
+  'finanzas_internacionales': {
+    nombre: 'Finanzas Internacionales', creditos: 5, prerequisitos: ['finanzas_corporativas'], abre: [], semestre: 9
+  },
+  'coyuntura': {
+    nombre: 'Análisis de Entorno y Coyuntura', creditos: 5, prerequisitos: ['economia_internacional','integracion'], abre: [], semestre: 9
+  },
+  'ciudadana_global': {
+    nombre: 'Formación Ciudadana Global', creditos: 3, prerequisitos: ['negociaciones'], abre: [], semestre: 9
+  },
+  'especializacion1': {
+    nombre: 'Curso I de Especialización', creditos: 0, prerequisitos: [], abre: [], semestre: 9
+  },
+
+  // SEMESTRE 10
+  'practica': {
+    nombre: 'Práctica Profesional', creditos: 16, prerequisitos: ['perfil2','english_academic','gestion_aduanera','derecho_comercial','macroeconomia','negociacion','operaciones'], abre: [], semestre: 10
+  },
+  'seminario': {
+    nombre: 'Seminario de Título', creditos: 12, prerequisitos: ['simulacion2'], abre: [], semestre: 10
+  },
+  'especializacion2': {
+    nombre: 'Curso II de Especialización', creditos: 0, prerequisitos: [], abre: [], semestre: 10
+  },
+
+// (Las funciones de lógica permanecen igual)
+// crearMalla(), actualizarEstado(), seleccionarRamo(), mostrarDetalles(), window.onload = crearMalla;
 
 // Búsqueda por nombre
 function buscarRamo(nombreBuscado) {
